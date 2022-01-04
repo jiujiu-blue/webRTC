@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN">
+
+<head>
+  <!-- prevent extraneous favicon requests -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    form {
+      position:relative;
+      background: #212D3B;
+      bottom: 0;
+      width: 100%;
+      height:20%;
+  }
+
+  form input {
+      border: 0;
+      padding: 10px;
+      width: 70%;
+      margin-right: 0.5%;
+      color:white;
+      background: #212D3B;
+  }
+
+  form button {
+      width: 20%;
+      background: rgb(130, 224, 255);
+      border: none;
+      padding: 2px;
+  }
+  #messages {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      color:white;
+      overflow:scroll;
+  }
+
+  #messages li {
+      padding: 5px 10px;
+  }
+
+  </style>
+  <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+  <script src="webrtc.js"></script>
+</head>
+
+<body>
+
+  <div id="videos" class="videos">
+    <div id="localVideoContainer" class="videoContainer">
+      <video id="localVideo" autoplay muted></video>
+  </div>
+  <div id="message" class="videos message">
+    <li style="text-align:center;text-weight:bond">Hello，friends!</li>
+    <ul id="messages"></ul>
+    <form action="">
+      <input id="m" autocomplete="off" /><button>Send</button>
+    </form>
+  </div>
+
+
+    <!-- Remote videos get appended here -->
+
+  </div>
+  <script src="//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.js"></script>
+  <script src="//cdn.bootcdn.net/ajax/libs/socket.io/3.0.4/socket.io.js"></script>
+  <script type="text/javascript">
+    function ReadCookie(cookieName) {
+      var theCookie = "" + document.cookie;
+      var ind = theCookie.indexOf(cookieName);
+      if(ind==-1 || cookieName=="") {
+          return ""
+      };
+      var ind1 = theCookie.indexOf(';',ind);
+      if(ind1==-1) {
+          ind1 = theCookie.length;
+      };
+      /*读取Cookie值*/
+      return unescape(theCookie.substring(ind+cookieName.length+1,ind1));
+  } 
+  var name = ReadCookie("id");
+  start(name);
+  </script>
+  <script>
+    $(document).ready(function () {
+        var socket = io("//");
+        console.log("hello");
+        socket.on("connect", () => {
+            console.log("connect " + socket.id);
+        });
+        $('form').submit(function (e) {
+            e.preventDefault();
+            socket.emit('chat message', $('#m').val());
+            console.log("sucess!");
+            $('#m').val('');
+            return false;
+        });
+        var userid;
+        socket.on('chat user', function (id) {
+          userid=id;
+        }); 
+        socket.on('chat message', function (msg) {
+            console.log(msg);
+            if(userid==socket.id){
+              var mes=
+              '<li style="text-align:right;color:yellow">'+msg+'</li>';
+            }
+            else
+            {
+              var mes=
+              '<li style="text-align:left">'+msg+'</li>';
+            }
+            $('#messages').append(mes);
+        });
+    });
+</script>
+
+
+</body>
+
+</html>

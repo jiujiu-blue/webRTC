@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://csdnimg.cn/public/favicon.ico" rel="SHORTCUT ICON">
+
+    <title>登录</title>
+    <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            background-image: url("https://jiujiu-blue.github.io/bg.jpg");
+            background-size: cover;
+        }
+        canvas {
+            display: block;
+        }
+        
+        #canvas_container {
+            width: 100%;
+            height: 100vh;
+        }
+        
+        input{
+            position: absolute;
+            bottom: 31%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 1px solid white;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            padding: 0.5rem 0.9em;
+            background: #000000;
+            color: white;
+            -webkit-font-smoothing: antialiased;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.5s; 
+        }
+        p{
+            position: absolute;
+            bottom: 50%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 3rem;
+            color: blueviolet;
+            -webkit-font-smoothing: antialiased;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.5s; 
+        }
+
+        button {
+            position: absolute;
+            bottom: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 1px solid white;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            padding: 0.5rem 0.9em;
+            background: #000000;
+            color: white;
+            -webkit-font-smoothing: antialiased;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.5s;
+        }
+        
+        button:hover {
+            background: #ffffff;
+            color: #000000;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="canvas_container"></div>
+    <p>Let's chat!</p>  
+    <input id="name" type="text" placeholder="用户名" name="username"/><br/><br/>
+    <button value="登 录" onclick="toindex()">登录</button>
+    <script src='https://jiujiu-blue.github.io/three.min.js'></script>
+    <script src="https://jiujiu-blue.github.io/script.js"></script>
+    <script>
+      function SetCookie(cookieName,cookieValue,nDays) {
+        /*当前日期*/
+        var today = new Date();
+        /*Cookie过期时间*/
+        var expire = new Date();
+        /*如果未设置nDays参数或者nDays为0，取默认值1*/
+        if(nDays == null || nDays == 0) {
+                nDays = 1;
+            }
+            /*计算Cookie过期时间*/
+            expire.setTime(today.getTime() + 3600000 * 24 * nDays);
+            /*设置Cookie值*/
+            document.cookie = cookieName + "=" + escape(cookieValue) + ";expires=" + expire.toGMTString();
+    }  
+      function toindex()
+      {
+        var parm=document.getElementById('name').value;
+        SetCookie("id",parm,1);
+        document.location = "index.html";
+      }
+    </script>
+</body>
+</html>
